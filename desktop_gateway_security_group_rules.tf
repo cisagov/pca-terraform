@@ -6,10 +6,9 @@ resource "aws_security_group_rule" "desktop_gw_ingress_from_trusted_via_ssh" {
   type              = "ingress"
   protocol          = "tcp"
   cidr_blocks       = var.trusted_ingress_networks_ipv4
-
-  # ipv6_cidr_blocks = "${var.trusted_ingress_networks_ipv6}"
-  from_port = 22
-  to_port   = 22
+  ipv6_cidr_blocks  = var.trusted_ingress_networks_ipv6
+  from_port         = 22
+  to_port           = 22
 }
 
 # Allow egress via ssh to the gophish instance
