@@ -4,6 +4,9 @@ language: python
 python: 3.7
 # pre-commit hooks can use Docker, so we should go ahead and enable it
 services: docker
+env:
+  global:
+    - CURL_CACHE_DIR="$HOME/.cache/curl"
 
 # Cache pip packages, pre-commit plugins, and some curl downloads to
 # speed up builds
