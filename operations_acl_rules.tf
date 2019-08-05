@@ -63,16 +63,17 @@ resource "aws_network_acl_rule" "operations_ingress_from_anywhere_via_ephemeral_
   to_port        = 65535
 }
 
-# Allow egress to private subnet via ephemeral ports
+# Allow egress to anywhere via ephemeral ports
 # For: DevOps ssh access from private subnet to operations subnet and
-#      PCA team VNC access from private subnet to operations subnet
-resource "aws_network_acl_rule" "operations_egress_to_private_via_ephemeral_ports" {
+#      PCA team VNC access from private subnet to operations subnet and
+#      PCA target callback communication
+resource "aws_network_acl_rule" "operations_egress_to_anywhere_via_ephemeral_ports" {
   network_acl_id = aws_network_acl.pca_operations.id
   egress         = true
   protocol       = "tcp"
   rule_number    = "201"
   rule_action    = "allow"
-  cidr_block     = aws_subnet.pca_private.cidr_block
+  cidr_block     = "0.0.0.0/0"
   from_port      = 1024
   to_port        = 65535
 }

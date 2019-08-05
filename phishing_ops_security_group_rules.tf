@@ -53,14 +53,15 @@ resource "aws_security_group_rule" "phishing_ops_ingress_from_anywhere_via_ephem
   to_port           = 65535
 }
 
-# Allow egress to guacamole instance via ephmeral ports
+# Allow egress to anywhere via ephmeral ports
 # For: DevOps ssh access from guacamole instance to phishing ops instance and
-#      PCA team VNC access from guacamole instance to phishing ops instance
-resource "aws_security_group_rule" "phishing_ops_egress_to_guacamole_via_ephemeral_ports" {
+#      PCA team VNC access from guacamole instance to phishing ops instance and
+#      PCA target callback communication
+resource "aws_security_group_rule" "phishing_ops_egress_to_anywhere_via_ephemeral_ports" {
   security_group_id = aws_security_group.pca_phishing_ops.id
   type              = "egress"
   protocol          = "tcp"
-  cidr_blocks       = ["${aws_instance.guacamole.private_ip}/32"]
+  cidr_blocks       = ["0.0.0.0/0"]
   from_port         = 1024
   to_port           = 65535
 }
