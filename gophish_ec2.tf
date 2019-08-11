@@ -45,6 +45,18 @@ resource "aws_instance" "gophish" {
   volume_tags = merge(var.tags, map("Name", "GoPhish"))
 }
 
+# The Elastic IP for the gophish instance
+resource "aws_eip" "gophish" {
+  vpc  = true
+  tags = merge(var.tags, map("Name", "GoPhish EIP"))
+}
+
+# The EIP association for the gophish instance
+resource "aws_eip_association" "gophish" {
+  instance_id   = aws_instance.gophish.id
+  allocation_id = aws_eip.gophish.id
+}
+
 # Note that the EBS volume contains production data, so we use the
 # prevent_destroy lifecycle element to disallow the destruction of it
 # via terraform.
