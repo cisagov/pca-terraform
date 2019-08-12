@@ -24,7 +24,7 @@ data "aws_ami" "gophish" {
 # The gophish EC2 instance
 resource "aws_instance" "gophish" {
   ami                         = data.aws_ami.gophish.id
-  instance_type               = "t3.micro"
+  instance_type               = "t3.small"
   availability_zone           = "${var.aws_region}${var.aws_availability_zone}"
   subnet_id                   = aws_subnet.pca_operations.id
   associate_public_ip_address = true
