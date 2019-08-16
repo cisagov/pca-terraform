@@ -42,14 +42,27 @@ resource "aws_security_group_rule" "phishing_ops_ingress_from_anywhere_via_https
   to_port           = 443
 }
 
-# Allow ingress from anywhere via ephmeral ports
+# Allow ingress from anywhere via lower ephemeral ports (1024-5900)
+# We do not want to allow everyone to hit VNC on port 5901
 # For: GoPhish fetches resources from https://fonts.googleapis.com
-resource "aws_security_group_rule" "phishing_ops_ingress_from_anywhere_via_ephemeral_ports" {
+resource "aws_security_group_rule" "phishing_ops_ingress_from_anywhere_via_ports_1024_thru_5900" {
   security_group_id = aws_security_group.pca_phishing_ops.id
   type              = "ingress"
   protocol          = "tcp"
   cidr_blocks       = ["0.0.0.0/0"]
   from_port         = 1024
+  to_port           = 5900
+}
+
+# Allow ingress from anywhere via upper ephemeral ports (5902-65535)
+# We do not want to allow everyone to hit VNC on port 5901
+# For: GoPhish fetches resources from https://fonts.googleapis.com
+resource "aws_security_group_rule" "phishing_ops_ingress_from_anywhere_ports_5902_thru_65535" {
+  security_group_id = aws_security_group.pca_phishing_ops.id
+  type              = "ingress"
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"]
+  from_port         = 5902
   to_port           = 65535
 }
 
