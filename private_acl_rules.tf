@@ -15,7 +15,7 @@ resource "aws_network_acl_rule" "private_ingress_from_anywhere_via_ssh" {
 }
 
 # Allow egress to anywhere via HTTPS
-# For: GoPhish fetches resources from https://fonts.googleapis.com
+# For: Guacamole fetches its SSL certificate via boto3 (which uses HTTPS)
 resource "aws_network_acl_rule" "private_egress_to_anywhere_via_https" {
   network_acl_id = aws_network_acl.pca_private.id
   egress         = true
@@ -67,20 +67,21 @@ resource "aws_network_acl_rule" "private_ingress_from_operations_via_ephemeral_p
   to_port        = 65535
 }
 
-# Allow ingress from anywhere via port 8443 (nginx/guacamole web)
+# Allow ingress from anywhere via ephemeral ports
 # Ingress is further restricted to only trusted networks via
 # the desktop gateway security group
 # For: PCA team access to guacamole web client
+#      Guacamole fetches its SSL certificate via boto3 (which uses HTTPS)
 # TODO: Modify this access when VPN solution is implemented
-resource "aws_network_acl_rule" "private_ingress_from_anywhere_via_port_8443" {
+resource "aws_network_acl_rule" "private_ingress_from_anywhere_via_ephemeral_ports" {
   network_acl_id = aws_network_acl.pca_private.id
   egress         = false
   protocol       = "tcp"
   rule_number    = "110"
   rule_action    = "allow"
   cidr_block     = "0.0.0.0/0"
-  from_port      = 8443
-  to_port        = 8443
+  from_port      = 1024
+  to_port        = 65535
 }
 
 # Allow egress to operations subnet via VNC
