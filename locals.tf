@@ -1,4 +1,9 @@
 locals {
+  guacamole_cert_bucket_path_arn = "${format("arn:aws:s3:::%s/live/%s/*",
+    var.cert_bucket_name,
+    var.guacamole_fqdn
+  )}"
+
   # This is a goofy but necessary way to determine if
   # terraform.workspace contains the substring "prod"
   production_workspace = replace(terraform.workspace, "prod", "") != terraform.workspace
