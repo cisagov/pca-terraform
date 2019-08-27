@@ -8,6 +8,11 @@ variable "aws_availability_zone" {
   default     = "a"
 }
 
+
+variable "dns_role_arn" {
+  type        = string
+  description = "The ARN of the role that can modify route53 DNS. (e.g. arn:aws:iam::123456789abc:role/ModifyPublicDNS)"
+}
 variable "tags" {
   type        = map(string)
   description = "Tags to apply to all AWS resources created"
