@@ -8,11 +8,27 @@ variable "aws_availability_zone" {
   default     = "a"
 }
 
+variable "cert_bucket_name" {
+  type        = string
+  description = "The name of a bucket that stores certificates. (e.g. my-certs)"
+}
+
 
 variable "dns_role_arn" {
   type        = string
   description = "The ARN of the role that can modify route53 DNS. (e.g. arn:aws:iam::123456789abc:role/ModifyPublicDNS)"
 }
+
+variable "guacamole_cert_read_role_arn" {
+  type        = string
+  description = "A string containing the ARN of a role that can read the Guacamole instance certificate. (e.g. arn:aws:iam::123456789abc:role/ReadCerts)"
+}
+
+variable "guacamole_fqdn" {
+  type        = string
+  description = "A string containing the fully-qualified domain name of the Guacamole instance; it must match the name on the certificate that resides in <cert_bucket_name>. (e.g. guacamole.example.cisa.gov)"
+}
+
 variable "tags" {
   type        = map(string)
   description = "Tags to apply to all AWS resources created"
