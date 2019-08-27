@@ -13,10 +13,18 @@ variable "cert_bucket_name" {
   description = "The name of a bucket that stores certificates. (e.g. my-certs)"
 }
 
+variable "dns_domain" {
+  description = "The domain to use for DNS (e.g. cyber.dhs.gov)"
+}
 
 variable "dns_role_arn" {
   type        = string
   description = "The ARN of the role that can modify route53 DNS. (e.g. arn:aws:iam::123456789abc:role/ModifyPublicDNS)"
+}
+
+variable "dns_ttl" {
+  description = "The TTL value to use for Route53 DNS records (e.g. 86400).  A smaller value may be useful when the DNS records are changing often, for example when testing."
+  default     = 60
 }
 
 variable "guacamole_cert_read_role_arn" {
