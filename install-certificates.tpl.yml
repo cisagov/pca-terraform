@@ -52,8 +52,12 @@ write_files:
           with open(dst, "wb") as f:
               f.write(obj["Body"].read())
 
+# The guacamole-composition systemd service is guaranteed to start AFTER this
+# cloud-init script runs.  Therefore, we have to create
+# /var/guacamole/nginx/ssl/ before we put the certificate files in there.
+# Also, since the guacamole-composition service has not started up, there's
+# no need to restart it to use the newly-deployed certificate.
 runcmd:
+  # Ensure nginx ssl directory is present before we put the cert files there
+  - mkdir -p /var/guacamole/nginx/ssl/
   - /root/install-certificates.py
-  - docker-compose -f /var/guacamole/docker-compose.yml restart
-  # Coming soon!
-  # - /bin/systemctl restart guacamole-composition.service
