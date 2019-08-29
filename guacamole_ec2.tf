@@ -23,10 +23,11 @@ data "aws_ami" "guacamole" {
 
 # The guacamole EC2 instance
 resource "aws_instance" "guacamole" {
-  ami               = data.aws_ami.guacamole.id
-  instance_type     = "t3.micro"
-  availability_zone = "${var.aws_region}${var.aws_availability_zone}"
-  subnet_id         = aws_subnet.pca_private.id
+  ami                  = data.aws_ami.guacamole.id
+  iam_instance_profile = aws_iam_instance_profile.guacamole.name
+  instance_type        = "t3.micro"
+  availability_zone    = "${var.aws_region}${var.aws_availability_zone}"
+  subnet_id            = aws_subnet.pca_private.id
   # TODO: Eventually get rid of public IP address for this instance
   associate_public_ip_address = true
 
@@ -35,6 +36,8 @@ resource "aws_instance" "guacamole" {
     volume_size           = 8
     delete_on_termination = true
   }
+
+  user_data_base64 = data.template_cloudinit_config.guacamole_cloud_init_tasks.rendered
 
   vpc_security_group_ids = [
     aws_security_group.pca_desktop_gateway.id,
