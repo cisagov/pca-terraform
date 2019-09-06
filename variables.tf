@@ -34,7 +34,7 @@ variable "guacamole_cert_read_role_arn" {
 
 variable "guac_connection_setup_filename" {
   type        = string
-  description = "The name of the file to create on the Guacamole instance containing SQL instructions to populate any desired Guacamole connections"
+  description = "The name of the file to create on the Guacamole instance containing SQL instructions to populate any desired Guacamole connections.  NOTE: Postgres processes these files alphabetically, so it's important to name this file so it runs after the file that defines the Guacamole tables and users ('00_initdb.sql')."
   default     = "01_setup_guac_connections.sql"
 }
 
