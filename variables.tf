@@ -32,6 +32,44 @@ variable "guacamole_cert_read_role_arn" {
   description = "A string containing the ARN of a role that can read the Guacamole instance certificate. (e.g. arn:aws:iam::123456789abc:role/ReadCerts)"
 }
 
+variable "guac_connection_setup_filename" {
+  type        = string
+  description = "The name of the file to create on the Guacamole instance containing SQL instructions to populate any desired Guacamole connections"
+  default     = "01_setup_guac_connections.sql"
+}
+
+variable "guac_connection_setup_path" {
+  type        = string
+  description = "The full path to the dbinit directory where <guac_connection_setup_filename> must be stored in order to work properly"
+  default     = "/var/guacamole/dbinit"
+}
+
+variable "guac_gophish_connection_name" {
+  type        = string
+  description = "The desired name of the Guacamole connection to the GoPhish instance"
+  default     = "GoPhish"
+}
+
+variable "ssm_gophish_vnc_read_role_arn" {
+  type        = string
+  description = "A string containing the ARN of a role that can get the SSM parameters for the VNC username, password, and private SSH key used on the GoPhish instance. (e.g. arn:aws:iam::123456789abc:role/ReadGoPhishVNCSSMParameters)"
+}
+
+variable "ssm_key_gophish_vnc_password" {
+  type        = string
+  description = "The AWS SSM parameter that contains the password needed to connect to the GoPhish instance via VNC (e.g. /vnc/password)"
+}
+
+variable "ssm_key_gophish_vnc_username" {
+  type        = string
+  description = "The AWS SSM parameter that contains the username of the VNC user on the GoPhish instance (e.g. /vnc/username)"
+}
+
+variable "ssm_key_gophish_vnc_user_private_ssh_key" {
+  type        = string
+  description = "The AWS SSM parameter that contains the private SSH key of the VNC user on the GoPhish instance (e.g. /vnc/ssh_private_key)"
+}
+
 variable "guacamole_fqdn" {
   type        = string
   description = "A string containing the fully-qualified domain name of the Guacamole instance; it must match the name on the certificate that resides in <cert_bucket_name>. (e.g. guacamole.example.cisa.gov)"
