@@ -50,8 +50,11 @@ data "aws_iam_policy_document" "guacamole_read_cert_policy_doc" {
 
 data "aws_iam_policy_document" "guacamole_assume_delegated_role_policy_doc" {
   statement {
-    actions   = ["sts:AssumeRole"]
-    resources = ["${var.guacamole_cert_read_role_arn}"]
-    effect    = "Allow"
+    actions = ["sts:AssumeRole"]
+    resources = [
+      "${var.guacamole_cert_read_role_arn}",
+      "${var.ssm_gophish_vnc_read_role_arn}"
+    ]
+    effect = "Allow"
   }
 }
