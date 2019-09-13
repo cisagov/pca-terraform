@@ -5,10 +5,9 @@ data "template_cloudinit_config" "guacamole_cloud_init_tasks" {
   base64_encode = true
 
   part {
-    filename     = "install-certificates.yml"
-    content_type = "text/cloud-config"
+    content_type = "text/x-shellscript"
     content = templatefile(
-      "${path.module}/install-certificates.tpl.yml", {
+      "${path.module}/install-certificates.py", {
         cert_bucket_name   = var.cert_bucket_name
         cert_read_role_arn = var.guacamole_cert_read_role_arn
         server_fqdn        = var.guacamole_fqdn
