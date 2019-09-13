@@ -28,7 +28,7 @@ data "template_cloudinit_config" "guacamole_cloud_init_tasks" {
   part {
     content_type = "text/x-shellscript"
     content = templatefile(
-      "${path.module}/cloud-init/render-guac-connection-template-sql.py", {
+      "${path.module}/cloud-init/render-guac-connection-sql-template.py", {
         aws_region                               = var.aws_region
         guac_connection_setup_filename           = var.guac_connection_setup_filename
         guac_connection_setup_path               = var.guac_connection_setup_path
