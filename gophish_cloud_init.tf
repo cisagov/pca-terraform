@@ -1,7 +1,7 @@
 # cloud-init commands for configuring gophish data volume
 
 data "template_file" "gophish_disk_setup" {
-  template = file("${path.module}/disk_setup.sh")
+  template = file("${path.module}/cloud-init/disk_setup.sh")
 
   vars = {
     num_disks     = 2
@@ -14,7 +14,7 @@ data "template_file" "gophish_disk_setup" {
 }
 
 data "template_file" "gophish_dir_setup" {
-  template = file("${path.module}/gophish_dir_setup.sh")
+  template = file("${path.module}/cloud-init/gophish_dir_setup.sh")
 
   vars = {
     gophish_data_dir = "/var/pca/pca-gophish-composition/data"
