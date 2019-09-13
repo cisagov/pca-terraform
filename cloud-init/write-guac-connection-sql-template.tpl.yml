@@ -18,7 +18,7 @@ write_files:
         connection_name, protocol, max_connections, max_connections_per_user,
         proxy_port, proxy_hostname, proxy_encryption_method)
       VALUES (
-        '${guac_gophish_connection_name}', '{{ vnc_username }}', 10, 10, 4822,
+        '${guac_gophish_connection_name}', 'VNC', 10, 10, 4822,
         'guacd', 'NONE');
 
       --
