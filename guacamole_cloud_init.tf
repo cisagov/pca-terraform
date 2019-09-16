@@ -9,7 +9,7 @@ data "template_cloudinit_config" "guacamole_cloud_init_tasks" {
     content = templatefile(
       "${path.module}/cloud-init/install-certificates.py", {
         cert_bucket_name   = var.cert_bucket_name
-        cert_read_role_arn = var.guacamole_cert_read_role_arn
+        cert_read_role_arn = module.guacamole_certreadrole.arn
         server_fqdn        = var.guacamole_fqdn
     })
   }

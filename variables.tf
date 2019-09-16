@@ -13,6 +13,11 @@ variable "cert_bucket_name" {
   description = "The name of a bucket that stores certificates. (e.g. my-certs)"
 }
 
+variable "cert_read_role_profile" {
+  type        = string
+  description = "The name of an AWS profile that has read access to the S3 bucket ('cert_bucket_name' above) where certificates are stored (e.g. certreadrole-role)"
+}
+
 variable "dns_domain" {
   description = "The domain to use for DNS (e.g. cyber.dhs.gov)"
 }
@@ -27,9 +32,10 @@ variable "dns_ttl" {
   default     = 60
 }
 
-variable "guacamole_cert_read_role_arn" {
-  type        = string
-  description = "A string containing the ARN of a role that can read the Guacamole instance certificate. (e.g. arn:aws:iam::123456789abc:role/ReadCerts)"
+variable "guac_cert_read_role_accounts_allowed" {
+  type        = list(string)
+  description = "List of accounts allowed to access the role that can read certificates from an S3 bucket."
+  default     = []
 }
 
 variable "guac_connection_setup_filename" {
@@ -50,6 +56,11 @@ variable "guac_gophish_connection_name" {
   default     = "GoPhish"
 }
 
+variable "guacamole_fqdn" {
+  type        = string
+  description = "A string containing the fully-qualified domain name of the Guacamole instance; it must match the name on the certificate that resides in <cert_bucket_name>. (e.g. guacamole.example.cisa.gov)"
+}
+
 variable "ssm_gophish_vnc_read_role_arn" {
   type        = string
   description = "A string containing the ARN of a role that can get the SSM parameters for the VNC username, password, and private SSH key used on the GoPhish instance. (e.g. arn:aws:iam::123456789abc:role/ReadGoPhishVNCSSMParameters)"
@@ -68,11 +79,6 @@ variable "ssm_key_gophish_vnc_username" {
 variable "ssm_key_gophish_vnc_user_private_ssh_key" {
   type        = string
   description = "The AWS SSM parameter that contains the private SSH key of the VNC user on the GoPhish instance (e.g. /vnc/ssh_private_key)"
-}
-
-variable "guacamole_fqdn" {
-  type        = string
-  description = "A string containing the fully-qualified domain name of the Guacamole instance; it must match the name on the certificate that resides in <cert_bucket_name>. (e.g. guacamole.example.cisa.gov)"
 }
 
 variable "tags" {
