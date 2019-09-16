@@ -50,6 +50,11 @@ variable "guac_gophish_connection_name" {
   default     = "GoPhish"
 }
 
+variable "guacamole_fqdn" {
+  type        = string
+  description = "A string containing the fully-qualified domain name of the Guacamole instance; it must match the name on the certificate that resides in <cert_bucket_name>. (e.g. guacamole.example.cisa.gov)"
+}
+
 variable "ssm_gophish_vnc_read_role_arn" {
   type        = string
   description = "A string containing the ARN of a role that can get the SSM parameters for the VNC username, password, and private SSH key used on the GoPhish instance. (e.g. arn:aws:iam::123456789abc:role/ReadGoPhishVNCSSMParameters)"
@@ -68,11 +73,6 @@ variable "ssm_key_gophish_vnc_username" {
 variable "ssm_key_gophish_vnc_user_private_ssh_key" {
   type        = string
   description = "The AWS SSM parameter that contains the private SSH key of the VNC user on the GoPhish instance (e.g. /vnc/ssh_private_key)"
-}
-
-variable "guacamole_fqdn" {
-  type        = string
-  description = "A string containing the fully-qualified domain name of the Guacamole instance; it must match the name on the certificate that resides in <cert_bucket_name>. (e.g. guacamole.example.cisa.gov)"
 }
 
 variable "tags" {
