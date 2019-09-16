@@ -13,6 +13,11 @@ variable "cert_bucket_name" {
   description = "The name of a bucket that stores certificates. (e.g. my-certs)"
 }
 
+variable "cert_read_role_profile" {
+  type        = string
+  description = "The name of an AWS profile that has read access to the S3 bucket ('cert_bucket_name' above) where certificates are stored (e.g. certreadrole-role)"
+}
+
 variable "dns_domain" {
   description = "The domain to use for DNS (e.g. cyber.dhs.gov)"
 }
@@ -27,9 +32,10 @@ variable "dns_ttl" {
   default     = 60
 }
 
-variable "guacamole_cert_read_role_arn" {
-  type        = string
-  description = "A string containing the ARN of a role that can read the Guacamole instance certificate. (e.g. arn:aws:iam::123456789abc:role/ReadCerts)"
+variable "guac_cert_read_role_accounts_allowed" {
+  type        = list(string)
+  description = "List of accounts allowed to access the role that can read certificates from an S3 bucket."
+  default     = []
 }
 
 variable "guac_connection_setup_filename" {

@@ -12,5 +12,11 @@ provider "aws" {
   }
 }
 
+provider "aws" {
+  region  = "${var.aws_region}"
+  profile = var.cert_read_role_profile
+  alias   = "cert_read_role"
+}
+
 # The AWS account ID being used
 data "aws_caller_identity" "current" {}
