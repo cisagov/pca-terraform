@@ -12,13 +12,6 @@ resource "aws_iam_role" "guacamole_instance_role" {
   assume_role_policy = "${data.aws_iam_policy_document.guacamole_assume_role_policy_doc.json}"
 }
 
-# Attach policies to the instance role
-resource "aws_iam_role_policy" "guacamole_access_cert_policy" {
-  name   = "access_cert_policy"
-  role   = aws_iam_role.guacamole_instance_role.id
-  policy = "${data.aws_iam_policy_document.guacamole_read_cert_policy_doc.json}"
-}
-
 resource "aws_iam_role_policy" "guacamole_assume_delegated_role_policy" {
   name   = "assume_delegated_role_policy"
   role   = aws_iam_role.guacamole_instance_role.id
@@ -37,14 +30,6 @@ data "aws_iam_policy_document" "guacamole_assume_role_policy_doc" {
       identifiers = ["ec2.amazonaws.com"]
     }
     effect = "Allow"
-  }
-}
-
-data "aws_iam_policy_document" "guacamole_read_cert_policy_doc" {
-  statement {
-    actions   = ["s3:GetObject"]
-    resources = ["${local.guacamole_cert_bucket_path_arn}"]
-    effect    = "Allow"
   }
 }
 
