@@ -13,9 +13,9 @@ variable "cert_bucket_name" {
   description = "The name of a bucket that stores certificates. (e.g. my-certs)"
 }
 
-variable "cert_read_role_profile" {
+variable "cert_read_role_arn" {
   type        = string
-  description = "The name of an AWS profile that has read access to the S3 bucket ('cert_bucket_name' above) where certificates are stored (e.g. certreadrole-role)"
+  description = "The ARN of the role that can create roles to have read access to the S3 bucket ('cert_bucket_name' above) where certificates are stored. (e.g. arn:aws:iam::123456789abc:role/CreateCertificateReadRoles)"
 }
 
 variable "dns_domain" {
@@ -79,6 +79,11 @@ variable "ssm_key_gophish_vnc_username" {
 variable "ssm_key_gophish_vnc_user_private_ssh_key" {
   type        = string
   description = "The AWS SSM parameter that contains the private SSH key of the VNC user on the GoPhish instance (e.g. /vnc/ssh_private_key)"
+}
+
+variable "tf_role_arn" {
+  type        = string
+  description = "The ARN of the role that can terraform resources. (e.g. arn:aws:iam::123456789abc:role/TerraformPCA)"
 }
 
 variable "tags" {
