@@ -28,16 +28,23 @@ This project is used to create an operational Phishing Campaign Assessment
   aws_region                    = "us-east-1"
   aws_availability_zone         = "a"
   cert_bucket_name              = "my-certificates"
+  cert_read_role_arn            = "arn:aws:iam::123456789abc:role/CreateCertificateReadRoles"
   dns_domain                    = "cisa.gov"
-  dns_role_arn                  = "arn:aws:iam::111111111111:role/ModifyPublicDNS"
+  dns_role_arn                  = "arn:aws:iam::123456789abc:role/ModifyPublicDNS"
   dns_ttl                       = 60
-  guacamole_cert_read_role_arn  = "arn:aws:iam::111111111111:role/ReadCert-guacamole.example.cisa.gov"
   guacamole_fqdn                = "guacamole.example.cisa.gov"
+  guac_cert_read_role_accounts_allowed = ["123456789abc"]
+  local_ec2_profile             = terraform-pca-role
+  ssm_gophish_vnc_read_role_arn = "arn:aws:iam::123456789abc:role/ReadGoPhishVNCSSMParameters"
+  ssm_key_gophish_vnc_password  = "/vnc/password"
+  ssm_key_gophish_vnc_username  = "/vnc/username"
+  ssm_key_gophish_vnc_user_private_ssh_key = "/vnc/ssh/rsa_private_key"
   tags                          = {
         Team        = "CISA - Example"
         Application = "Phishing Campaign Assessment (PCA)"
         Workspace   = "example"
   }
+  tf_role_arn                   = "arn:aws:iam::123456789abc:role/TerraformPCA"
   trusted_ingress_networks_ipv4 = [ "192.168.1.0/24" ]
   ```
 
