@@ -18,6 +18,12 @@ variable "cert_read_role_arn" {
   description = "The ARN of the role that can create roles to have read access to the S3 bucket ('cert_bucket_name' above) where certificates are stored. (e.g. arn:aws:iam::123456789abc:role/CreateCertificateReadRoles)"
 }
 
+variable "create_pca_flow_logs" {
+  type        = bool
+  description = "Whether or not to create flow logs for the PCA VPC."
+  default     = false
+}
+
 variable "dns_domain" {
   description = "The domain to use for DNS (e.g. cyber.dhs.gov)"
 }
@@ -109,10 +115,4 @@ variable "trusted_ingress_networks_ipv6" {
   type        = list(string)
   description = "IPv6 CIDR blocks from which to allow ingress to the desktop gateway"
   default     = ["::/0"]
-}
-
-variable "create_pca_flow_logs" {
-  type        = bool
-  description = "Whether or not to create flow logs for the PCA VPC."
-  default     = false
 }
