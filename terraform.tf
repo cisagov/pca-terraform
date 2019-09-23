@@ -1,9 +1,10 @@
 terraform {
   backend "s3" {
-    encrypt        = true
-    bucket         = "playground-terraform-state-storage"
+    bucket         = "cisa-cool-terraform-state"
     dynamodb_table = "terraform-state-lock"
-    region         = "us-east-1"
+    encrypt        = true
     key            = "pca-terraform/terraform.tfstate"
+    profile        = "terraform-role" # This profile must be defined in your AWS credentials file
+    region         = "us-east-1"
   }
 }

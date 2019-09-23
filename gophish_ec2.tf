@@ -93,14 +93,14 @@ resource "aws_volume_attachment" "gophish_data_attachment" {
   # 'terraform apply' to re-create it.
   provisioner "local-exec" {
     when       = destroy
-    command    = "aws --region=${var.aws_region} ec2 terminate-instances --instance-ids ${aws_instance.gophish.id}"
+    command    = "aws --region=${var.aws_region} --profile=${var.local_ec2_profile} ec2 terminate-instances --instance-ids ${aws_instance.gophish.id}"
     on_failure = continue
   }
 
   # Wait until instance is terminated before continuing on
   provisioner "local-exec" {
     when    = destroy
-    command = "aws --region=${var.aws_region} ec2 wait instance-terminated --instance-ids ${aws_instance.gophish.id}"
+    command = "aws --region=${var.aws_region} --profile=${var.local_ec2_profile} ec2 wait instance-terminated --instance-ids ${aws_instance.gophish.id}"
   }
 
   skip_destroy = true

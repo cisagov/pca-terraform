@@ -13,9 +13,15 @@ variable "cert_bucket_name" {
   description = "The name of a bucket that stores certificates. (e.g. my-certs)"
 }
 
-variable "cert_read_role_profile" {
+variable "cert_read_role_arn" {
   type        = string
-  description = "The name of an AWS profile that has read access to the S3 bucket ('cert_bucket_name' above) where certificates are stored (e.g. certreadrole-role)"
+  description = "The ARN of the role that can create roles to have read access to the S3 bucket ('cert_bucket_name' above) where certificates are stored. (e.g. arn:aws:iam::123456789abc:role/CreateCertificateReadRoles)"
+}
+
+variable "create_pca_flow_logs" {
+  type        = bool
+  description = "Whether or not to create flow logs for the PCA VPC."
+  default     = false
 }
 
 variable "dns_domain" {
@@ -58,12 +64,17 @@ variable "guac_gophish_connection_name" {
 
 variable "guacamole_fqdn" {
   type        = string
-  description = "A string containing the fully-qualified domain name of the Guacamole instance; it must match the name on the certificate that resides in <cert_bucket_name>. (e.g. guacamole.example.cisa.gov)"
+  description = "The fully-qualified domain name of the Guacamole instance; it must match the name on the certificate that resides in <cert_bucket_name>. (e.g. guacamole.example.cisa.gov)"
+}
+
+variable "local_ec2_profile" {
+  type        = string
+  description = "The name of a local AWS profile (e.g. in your ~/.aws/credentials) that has permission to terminate and check the status of the PCA EC2 instances. (e.g. terraform-pca-role)"
 }
 
 variable "ssm_gophish_vnc_read_role_arn" {
   type        = string
-  description = "A string containing the ARN of a role that can get the SSM parameters for the VNC username, password, and private SSH key used on the GoPhish instance. (e.g. arn:aws:iam::123456789abc:role/ReadGoPhishVNCSSMParameters)"
+  description = "The ARN of a role that can get the SSM parameters for the VNC username, password, and private SSH key used on the GoPhish instance. (e.g. arn:aws:iam::123456789abc:role/ReadGoPhishVNCSSMParameters)"
 }
 
 variable "ssm_key_gophish_vnc_password" {
@@ -79,6 +90,11 @@ variable "ssm_key_gophish_vnc_username" {
 variable "ssm_key_gophish_vnc_user_private_ssh_key" {
   type        = string
   description = "The AWS SSM parameter that contains the private SSH key of the VNC user on the GoPhish instance (e.g. /vnc/ssh_private_key)"
+}
+
+variable "tf_role_arn" {
+  type        = string
+  description = "The ARN of the role that can terraform resources. (e.g. arn:aws:iam::123456789abc:role/TerraformPCA)"
 }
 
 variable "tags" {
@@ -99,10 +115,4 @@ variable "trusted_ingress_networks_ipv6" {
   type        = list(string)
   description = "IPv6 CIDR blocks from which to allow ingress to the desktop gateway"
   default     = ["::/0"]
-}
-
-variable "create_pca_flow_logs" {
-  type        = bool
-  description = "Whether or not to create flow logs for the PCA VPC."
-  default     = false
 }
