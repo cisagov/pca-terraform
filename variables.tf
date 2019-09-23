@@ -67,11 +67,6 @@ variable "guacamole_fqdn" {
   description = "The fully-qualified domain name of the Guacamole instance; it must match the name on the certificate that resides in <cert_bucket_name>. (e.g. guacamole.example.cisa.gov)"
 }
 
-variable "local_ec2_profile" {
-  type        = string
-  description = "The name of a local AWS profile (e.g. in your ~/.aws/credentials) that has permission to terminate and check the status of the PCA EC2 instances. (e.g. terraform-pca-role)"
-}
-
 variable "ssm_gophish_vnc_read_role_arn" {
   type        = string
   description = "The ARN of a role that can get the SSM parameters for the VNC username, password, and private SSH key used on the GoPhish instance. (e.g. arn:aws:iam::123456789abc:role/ReadGoPhishVNCSSMParameters)"
