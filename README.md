@@ -34,7 +34,6 @@ This project is used to create an operational Phishing Campaign Assessment
   dns_ttl                       = 60
   guacamole_fqdn                = "guacamole.example.cisa.gov"
   guac_cert_read_role_accounts_allowed = ["123456789abc"]
-  local_ec2_profile             = terraform-pca-role
   ssm_gophish_vnc_read_role_arn = "arn:aws:iam::123456789abc:role/ReadGoPhishVNCSSMParameters"
   ssm_key_gophish_vnc_password  = "/vnc/password"
   ssm_key_gophish_vnc_username  = "/vnc/username"
@@ -64,7 +63,6 @@ This project is used to create an operational Phishing Campaign Assessment
 | guac_connection_setup_filename | The name of the file to create on the Guacamole instance containing SQL instructions to populate any desired Guacamole connections.  NOTE: Postgres processes these files alphabetically, so it's important to name this file so it runs after the file that defines the Guacamole tables and users ('00_initdb.sql'). | string | 01_setup_guac_connections.sql | no |
 | guac_connection_setup_path | The desired name of the Guacamole connection to the GoPhish instance | string | GoPhish | no |
 | guacamole_fqdn | The fully-qualified domain name of the Guacamole instance; it must match the name on the certificate that resides in <cert_bucket_name>. (e.g. guacamole.example.cisa.gov) | string | | yes |
-| local_ec2_profile | The name of a local AWS profile (e.g. in your ~/.aws/credentials) that has permission to terminate and check the status of the PCA EC2 instances. (e.g. terraform-pca-role) | string | | yes |
 | ssm_gophish_vnc_read_role_arn | The ARN of a role that can get the SSM parameters for the VNC username, password, and private SSH key used on the GoPhish instance. (e.g. arn:aws:iam::123456789abc:role/ReadGoPhishVNCSSMParameters) | string | | yes |
 | ssm_key_gophish_vnc_password | The AWS SSM parameter that contains the password needed to connect to the GoPhish instance via VNC (e.g. /vnc/password) | string | | yes |
 | ssm_key_gophish_vnc_username | The AWS SSM parameter that contains the username of the VNC user on the GoPhish instance (e.g. /vnc/username) | string | | yes |

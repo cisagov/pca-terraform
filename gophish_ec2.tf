@@ -78,31 +78,6 @@ resource "aws_volume_attachment" "gophish_data_attachment" {
   volume_id   = aws_ebs_volume.gophish_data.id
   instance_id = aws_instance.gophish.id
 
-  # Terraform attempts to destroy the volume attachment before it attempts to
-  # destroy the EC2 instance it is attached to.  EC2 does not like that and it
-  # results in the failed destruction of the volume attachment.  To get around
-  # this, we explicitly terminate the instance via the AWS CLI in a destroy
-  # provisioner; this gracefully shuts down the instance and allows
-  # terraform to successfully destroy the volume attachment.
-  #
-  # NOTE: These provisioners work well when destroying the entire terraform
-  # environment, but do not currently (terraform 0.12.6) work as intended
-  # when the instance is being replaced (i.e. destroyed and recreated by a
-  # single 'terraform apply' command).  In that case, it's best to manually
-  # destroy the instance (via the AWS console or CLI) and then run the
-  # 'terraform apply' to re-create it.
-  provisioner "local-exec" {
-    when       = destroy
-    command    = "aws --region=${var.aws_region} --profile=${var.local_ec2_profile} ec2 terminate-instances --instance-ids ${aws_instance.gophish.id}"
-    on_failure = continue
-  }
-
-  # Wait until instance is terminated before continuing on
-  provisioner "local-exec" {
-    when    = destroy
-    command = "aws --region=${var.aws_region} --profile=${var.local_ec2_profile} ec2 wait instance-terminated --instance-ids ${aws_instance.gophish.id}"
-  }
-
   skip_destroy = true
   depends_on   = [aws_ebs_volume.gophish_data]
 }
